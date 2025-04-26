@@ -15,7 +15,12 @@ def fuzzy_expand(word, vocab, d):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--server', required=True, help='搜索服务器地址, e.g. http://127.0.0.1:5000')
+     # parser.add_argument('--server', required=True, help='搜索服务器地址, e.g. http://127.0.0.1:5000')
+    parser.add_argument(
+        '--server',
+        default='http://192.168.228.141:5000',
+        help='搜索服务器地址 (默认: 192.168.228.141:5000)'
+    )
     parser.add_argument('--query',  required=True, help='查询关键词')
     parser.add_argument('--d', type=int, default=1, help='编辑距离阈值')
     parser.add_argument('--k', type=int, default=5, help='Top-k 文档数')
