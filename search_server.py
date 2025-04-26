@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, jsonify
 import json
 from utils.crypto_utils import decrypt
 from utils.data_structures import MerkleTree
@@ -22,6 +22,10 @@ tag2idx = {tag: i for i, tag in enumerate(tag_list)}
 @app.route('/vocabulary', methods=['GET'])
 def get_vocab():
     return jsonify(vocab)
+@app.route('/params', methods=['GET'])
+def get_params():
+    # 演示用：把 key、m、k、d 等参数返回给客户端
+    return jsonify(params)
 
 @app.route('/search', methods=['POST'])
 def search():

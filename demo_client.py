@@ -27,10 +27,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # 加载本地参数和词表
-    with open('server/params.json') as f:
-        params = json.load(f)
+    # with open('server/params.json') as f:
+    #     params = json.load(f)
+    # 从服务端拉取加密参数，而非读本地文件
+    params = requests.get(f"{args.server}/params").json()
     SK = bytes.fromhex(params['key'])
     m, k_hash, d = params['m'], params['k'], params['d']
+
     vocab = requests.get(f"{args.server}/vocabulary").json()
 
     # 1. 生成陷门
