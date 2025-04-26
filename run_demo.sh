@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# prerequisites: Ensure 'python3-venv' is installed on Ubuntu
+#   sudo apt update && sudo apt install -y python3-venv python3-pip
+
 set -e
 
 MODE=$1  # 参数: server 或 client
