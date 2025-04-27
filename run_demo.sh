@@ -20,7 +20,7 @@ function setup_venv() {
 }
 
 if [[ "$MODE" == "server" ]]; then
-  echo "== 在 Server VM (192.168.228.141) 上启动 =="
+  echo "== 在 Server VM (192.168.228.142) 上启动 =="
   setup_venv
   echo "== 安装依赖 =="
   pip install --upgrade pip

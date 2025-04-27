@@ -4,7 +4,7 @@ from utils.crypto_utils import prf
 from utils.data_structures import BloomFilter
 from difflib import get_close_matches
 
-SERVER = "http://192.168.228.141:5000"
+SERVER = "http://192.168.228.142:5000"
 QUERIES   = ["encryption", "bloom", "merkle", "email", "security"]
 DISTANCES = [0, 1, 2]
 TOP_K     = 5
