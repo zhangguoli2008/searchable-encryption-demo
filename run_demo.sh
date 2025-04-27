@@ -38,7 +38,9 @@ elif [[ "$MODE" == "client" ]]; then
   pip install --upgrade pip
   pip install -r requirements.txt
   echo "== 执行查询 =="
-  python3 demo_client.py --query "encryption" --d 1 --k 5
+  python3 demo_client.py --query "access" --d 1 --k 5
+#  python3 demo_client.py --server http://192.168.228.142:5000 \
+#    --query "access" --d 0 --k 5
 else
   echo "用法: $0 server   # 启动 Server"
   echo "      $0 client   # 启动 Client"
