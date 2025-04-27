@@ -27,3 +27,4 @@ done
 
 # 3. 完成汇总
 echo "[+] Done. Total files written: $(ls "$DST_DIR" | wc -l)"
+
