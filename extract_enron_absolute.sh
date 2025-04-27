@@ -1,40 +1,29 @@
 #!/usr/bin/env bash
 set -e
 
-# ----------------------------------------------------------------------------
-# extract_enron_absolute.sh
-# 从 Enron 原始邮件目录中抽取正文到指定 docs 目录
-# 支持 CRLF 换行兼容
-#
-# 使用方法：
-#   1. 将本脚本保存为 extract_enron_absolute.sh 并放任意位置
-#   2. 赋执行权限：chmod +x extract_enron_absolute.sh
-#   3. 直接运行：./extract_enron_absolute.sh
-#----------------------------------------------------------------------------
+# 配置——请根据你的环境修改这两个路径：
+RAW_DIR="/home/gl/Document/searchable-encryption-demo/data/raw/enron_mail_20110402/maildir"
+DST_DIR="/home/gl/Document/searchable-encryption-demo/data/docs"
 
-# 配置：
-RAW_DIR="/home/zhangguoli/Document/searchable-encryption-demo/data/raw/enron_mail_20110402/maildir"
-DST_DIR="/home/zhangguoli/Document/searchable-encryption-demo/data/docs"
-
-# 确保目标目录存在
+# 1. 确保目标目录存在
 mkdir -p "$DST_DIR"
 
-echo "[+] Extracting email bodies from: $RAW_DIR"
-echo "[+] Output directory: $DST_DIR"
+echo "[+] Extracting from $RAW_DIR to $DST_DIR …"
 
-# 遍历并抽取
-find "$RAW_DIR" -type f -name '*.txt' | while IFS= read -r f; do
-  # 构造唯一文件名：去掉前缀，替换斜杠为下划线
+# 2. 遍历所有文件（排除 DELETIONS.txt）
+find "$RAW_DIR" -type f ! -name 'DELETIONS.txt' | while IFS= read -r f; do
+  # 2.1 构造文件 ID：去掉 RAW_DIR 前缀，再把 / 换成 _
   id="${f#$RAW_DIR/}"
   id="${id//\//_}"
 
-  # sed删除CR，删除头部直到空行，剩下正文写入目标文件
-  sed -e 's/\r$//' -e '1,/^$/d' "$f" > "$DST_DIR/$id"
+  # 2.2 抽正文：跳过头部到第一个空行，再输出正文
+  #     用 awk，更加通用（兼容 CRLF/LF）
+  awk '/^\r?$/ {flag=1; next} flag' "$f" \
+    > "$DST_DIR/${id}.txt"
 
-  # 进度提示（可注释）
-  echo "--> Wrote $DST_DIR/$id"
+  # 进度提示（可注释掉以加速）
+  echo "→ $DST_DIR/${id}.txt"
 done
 
-# 完成统计
-total=$(ls "$DST_DIR" | wc -l)
-echo "[+] Done. Total extracted files: $total"
+# 3. 完成汇总
+echo "[+] Done. Total files written: $(ls "$DST_DIR" | wc -l)"
