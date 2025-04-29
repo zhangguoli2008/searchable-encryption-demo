@@ -27,6 +27,13 @@ def get_params():
     # 演示用：把 key、m、k、d 等参数返回给客户端
     return jsonify(params)
 
+# search_server.py 中添加
+@app.route('/merkle_root', methods=['GET'])
+def get_merkle_root():
+    with open('server/merkle_root.txt') as f:
+        return jsonify({'root': f.read().strip()})
+
+
 @app.route('/search', methods=['POST'])
 def search():
     data = request.json
