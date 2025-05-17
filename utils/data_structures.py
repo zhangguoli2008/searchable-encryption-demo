@@ -1,4 +1,3 @@
-import math
 import pickle
 import hashlib
 from bitarray import bitarray

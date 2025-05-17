@@ -9,6 +9,7 @@ from utils.data_structures import BloomFilter, MerkleTree
 # 分词正则
 WORD_RE = re.compile(r"[a-zA-Z]+")
 
+# 实现模糊匹配
 def fuzzy_expand(words, vocab, d=1):
     # TODO: 实现真正的模糊匹配
     return set(words)
